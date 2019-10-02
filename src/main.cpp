@@ -6,16 +6,11 @@
 /*   By: nathan <nathan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:19:03 by nathan            #+#    #+#             */
-/*   Updated: 2019/10/02 13:58:18 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/10/03 01:03:45 by nathan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ncurses.h>
-#include <sstream>
-#include "keys.hpp"
-#include "cursor.hpp"
-#include <unistd.h>
-#include <fcntl.h>
+#include "ft_retro.hpp"
 #define REFRESH_RATE 100000
 
 
@@ -33,14 +28,18 @@ void	handle_input(WINDOW *win, char c){
 	//wmove()
 }
 
-void	loop( WINDOW *win, Cursor cursor){
+void	loop( WINDOW *win){
 	char	i;
+	Manager manager;
 	i = 'a';
+	manager.add( new Ennemy1(0, WIDTH / 2, win, manager) );
 	while (i != ESC)
 	{
-		//wmove(win, 0, 0); // sets cursor to beginning of window
-		cursor.setXY(0, 0);
+		manager.update();
+		//cursor.setXY(0, 0);
 		i =  wgetch(win);
+		while (wgetch(win) != ERR);
+		wmove(win, 0, 0); // sets cursor to beginning of window
 		handle_input(win, i);
 		wrefresh(win);
 		werase(win);
@@ -51,11 +50,6 @@ void	loop( WINDOW *win, Cursor cursor){
 	wattroff(win, A_STANDOUT); // disable highlight
 }
 
-#define WIDTH 60
-#define HEIGHT 30
-#define MIDW (COLS - WIDTH) * 0.5
-#define MIDH (LINES - HEIGHT) * 0.5
-
 int		main( void ){
 	WINDOW *boxwin, *main_win;
 
@@ -64,14 +58,16 @@ int		main( void ){
 	cbreak(); // allows to catch input per char not waiting for \n
 	//	halfdelay(1); // used to discard getch(); after x * 1/10 sec // replaced by nodelay for now
 	curs_set(0); // set cursor to invisible
+	start_color();
+	init_pair(1, COLOR_YELLOW, COLOR_BLACK);
 	boxwin = newwin(HEIGHT, WIDTH, MIDH, MIDW);
 	box(boxwin, 0, 0); // create a box around the window
 	main_win = subwin(boxwin, HEIGHT - 2, WIDTH - 2, MIDH + 1, MIDW + 1); // create smaller window inside boxed window
 	keypad(main_win, true);// allow use of arrows
 	nodelay(main_win, true); // used to make getch() not bloking
 	wrefresh(boxwin); // refresh boxed window
-	Cursor cursor(main_win);
-	loop(main_win, cursor);
+	//Cursor cursor(main_win);
+	loop(main_win);
 	delwin(main_win); // destroy windows
 	delwin(boxwin);
 	delwin(stdscr);
