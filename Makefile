@@ -30,7 +30,7 @@ CC=c++
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $< -lncurses
+	$(CC) -o $@ $(OBJ) -lncurses
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJ_DIR)
