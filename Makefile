@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nathan </var/mail/nathan>                  +#+  +:+       +#+         #
+#    By: nathan <nathan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/30 17:14:38 by nathan            #+#    #+#              #
-#    Updated: 2019/09/30 17:14:38 by nathan           ###   ########.fr        #
+#    Updated: 2019/10/02 13:44:06 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= ft_retro
 
 
-FILES= main
+FILES= main Cursor
 
 SRC_DIR= src/
 SRC= $(addprefix $(SRC_DIR), $(addsuffix .cpp, $(FILES)))

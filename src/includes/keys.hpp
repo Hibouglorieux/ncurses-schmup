@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keys.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nathan </var/mail/nathan>                  +#+  +:+       +#+        */
+/*   By: nathan <nathan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 20:22:44 by nathan            #+#    #+#             */
-/*   Updated: 2019/09/30 20:31:50 by nathan           ###   ########.fr       */
+/*   Updated: 2019/10/02 13:20:32 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__MACH__)
 
 # define SPACE 32
 # define RIGHT 100
