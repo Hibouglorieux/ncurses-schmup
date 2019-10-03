@@ -6,7 +6,7 @@
 #    By: nathan <nathan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/30 17:14:38 by nathan            #+#    #+#              #
-#    Updated: 2019/10/02 16:52:25 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/10/03 18:52:37 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME     := ft_retro
 OBJPATH  := .obj/
 SRC_DIR  := src/
 MSG			=	Compiling ft_retro
-SRCS     := main.cpp Cursor.cpp ADisplay.cpp Ennemy1.cpp Manager.cpp
+SRCS     := main.cpp Cursor.cpp ADisplay.cpp Ennemy1.cpp Manager.cpp Player.cpp
 SRC      :=$(addprefix $(SRC_DIR), $(addsuffix .cpp, $(SRCS)))
 OBJS     := $(SRCS:.cpp=.o)
 OBJ      := $(addprefix $(OBJPATH), $(OBJS))

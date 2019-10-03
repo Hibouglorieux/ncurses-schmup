@@ -6,12 +6,12 @@
 /*   By: nathan <nathan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:19:03 by nathan            #+#    #+#             */
-/*   Updated: 2019/10/03 01:03:45 by nathan           ###   ########.fr       */
+/*   Updated: 2019/10/03 19:28:33 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_retro.hpp"
-#define REFRESH_RATE 100000
+#define REFRESH_RATE 50000
 
 
 /*
@@ -20,27 +20,40 @@
 */
 int		debug(void){return open("log", O_RDWR | O_APPEND | O_CREAT, 0666);}
 
-void	handle_input(WINDOW *win, char c){
-	if (~c) //if c != -1
-		wprintw(win, "Key pressed: %c|%d", c, c);
-	else
-		wprintw(win, "Press key");
+void	handle_input(WINDOW *win, Manager manager, int c){
+	(void)win;
+	(void)c;
+	 // if (~c) //if c != -1
+	 // 	wprintw(win, "Key pressed: %c|%d", c, c);
+	 // else
+	 // 	wprintw(win, "Press key");
+	if (c == UP)
+		manager.player->moveUp();
+	if (c == DOWN)
+		manager.player->moveDown();
+	if (c == LEFT)
+		manager.player->moveLeft();
+	if (c == RIGHT)
+		manager.player->moveRight();
+	dprintf(debug(), "Touche pressée : %c\n", c);
+	manager.player->update();
 	//wmove()
 }
 
 void	loop( WINDOW *win){
-	char	i;
-	Manager manager;
+	int	i;
+	Manager manager(new Player(26, 24, win, manager));
 	i = 'a';
-	manager.add( new Ennemy1(0, WIDTH / 2, win, manager) );
+	//manager.add( new Ennemy1(0, WIDTH / 2, win, manager) );
+	//manager.add(player);
 	while (i != ESC)
 	{
 		manager.update();
-		//cursor.setXY(0, 0);
 		i =  wgetch(win);
 		while (wgetch(win) != ERR);
 		wmove(win, 0, 0); // sets cursor to beginning of window
-		handle_input(win, i);
+		handle_input(win, manager, i);
+		manager.clear();
 		wrefresh(win);
 		werase(win);
 		usleep(REFRESH_RATE);
@@ -59,7 +72,8 @@ int		main( void ){
 	//	halfdelay(1); // used to discard getch(); after x * 1/10 sec // replaced by nodelay for now
 	curs_set(0); // set cursor to invisible
 	start_color();
-	init_pair(1, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(ENEMIES_COLOR, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(PLAYER_COLOR, COLOR_RED, COLOR_BLACK);
 	boxwin = newwin(HEIGHT, WIDTH, MIDH, MIDW);
 	box(boxwin, 0, 0); // create a box around the window
 	main_win = subwin(boxwin, HEIGHT - 2, WIDTH - 2, MIDH + 1, MIDW + 1); // create smaller window inside boxed window
