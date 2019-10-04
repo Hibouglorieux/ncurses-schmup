@@ -14,7 +14,7 @@ NAME     := ft_retro
 OBJPATH  := .obj/
 SRC_DIR  := src/
 MSG			=	Compiling ft_retro
-SRCS     := main.cpp Cursor.cpp ADisplay.cpp Ennemy1.cpp Manager.cpp Player.cpp
+SRCS     := main.cpp Cursor.cpp ADisplay.cpp Ennemy1.cpp Manager.cpp Player.cpp Weapon.cpp Projectile.cpp
 SRC      :=$(addprefix $(SRC_DIR), $(addsuffix .cpp, $(SRCS)))
 OBJS     := $(SRCS:.cpp=.o)
 OBJ      := $(addprefix $(OBJPATH), $(OBJS))

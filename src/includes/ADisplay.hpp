@@ -6,7 +6,7 @@
 /*   By: nathan <nallani@student.s19.be>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 23:11:27 by nathan            #+#    #+#             */
-/*   Updated: 2019/10/03 00:28:25 by nathan           ###   ########.fr       */
+/*   Updated: 2019/10/04 04:14:48 by nathan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ protected:
 	int _x;
 	WINDOW* _win;
 	Manager & _manager;
+	bool	_destroyed;
 
 	virtual void	erase( void ) const;
 	virtual void	draw( void ) const = 0;

@@ -6,12 +6,15 @@
 /*   By: nathan <nathan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:19:03 by nathan            #+#    #+#             */
-/*   Updated: 2019/10/03 19:28:33 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/10/04 04:50:32 by nathan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_retro.hpp"
+#include "Projectile.hpp"
+#include "Weapon.hpp"
 #define REFRESH_RATE 50000
+#include <iostream>
 
 
 /*
@@ -20,7 +23,7 @@
 */
 int		debug(void){return open("log", O_RDWR | O_APPEND | O_CREAT, 0666);}
 
-void	handle_input(WINDOW *win, Manager manager, int c){
+void	handle_input(WINDOW *win, Manager & manager, int c){
 	(void)win;
 	(void)c;
 	 // if (~c) //if c != -1
@@ -35,6 +38,8 @@ void	handle_input(WINDOW *win, Manager manager, int c){
 		manager.player->moveLeft();
 	if (c == RIGHT)
 		manager.player->moveRight();
+	if (c == SPACE)
+		manager.player->shoot();
 	dprintf(debug(), "Touche pressée : %c\n", c);
 	manager.player->update();
 	//wmove()
@@ -43,13 +48,14 @@ void	handle_input(WINDOW *win, Manager manager, int c){
 void	loop( WINDOW *win){
 	int	i;
 	Manager manager(new Player(26, 24, win, manager));
+	manager.player->equip(new Weapon);
 	i = 'a';
 	//manager.add( new Ennemy1(0, WIDTH / 2, win, manager) );
 	//manager.add(player);
 	while (i != ESC)
 	{
 		manager.update();
-		i =  wgetch(win);
+		i = wgetch(win);
 		while (wgetch(win) != ERR);
 		wmove(win, 0, 0); // sets cursor to beginning of window
 		handle_input(win, manager, i);
@@ -74,6 +80,7 @@ int		main( void ){
 	start_color();
 	init_pair(ENEMIES_COLOR, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(PLAYER_COLOR, COLOR_RED, COLOR_BLACK);
+	init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
 	boxwin = newwin(HEIGHT, WIDTH, MIDH, MIDW);
 	box(boxwin, 0, 0); // create a box around the window
 	main_win = subwin(boxwin, HEIGHT - 2, WIDTH - 2, MIDH + 1, MIDW + 1); // create smaller window inside boxed window
